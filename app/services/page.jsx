@@ -1,14 +1,18 @@
 'use client'
 import { useContext, useEffect } from "react";
 import barContext from "@/context/LoadingBar/barContext";
-import React from 'react'
 
-export default function Home() {
-  // connect()
+const Services = () => {
   const barCon = useContext(barContext);
   const { setProgress } = barCon;
   useEffect(() => {
     setProgress(100)
   }, [])
-  return <></>;
+  return (
+    <div>
+      I am services
+    </div>
+  )
 }
+
+export default Services
