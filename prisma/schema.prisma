@@ -10,7 +10,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_URL")
+  url      = "postgres://default:Fe4aKD6GdQVJ@ep-proud-forest-a1k9zqd9-pooler.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require/pandeyindustries"
 }
 
 model Products {
