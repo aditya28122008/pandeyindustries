@@ -7,11 +7,6 @@ import ProductItem from "@/Components/ProductItem";
 
 const CategoryProds = async ({ params }) => {
   const category = params.category;
-  // const client = new MongoClient(vars.mongoUri)
-  // const db = client.db("pandeyIndustries")
-  // const collection = db.collection("products")
-  // const prods = await collection.find({category: category}).toArray();
-  // await client.close()
   const db = client.db(`${process.env.DATABASE_NAME_MONGO}`)
   const collection = db.collection("Products")
   const prods = await collection.find({category: category}).toArray();
