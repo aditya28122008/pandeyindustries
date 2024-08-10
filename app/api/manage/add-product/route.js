@@ -1,5 +1,5 @@
 import client from "@/app/db";
-import prisma from "@/lib/prisma";
+
 import vars from "@/vars";
 import { NextResponse } from "next/server";
 

@@ -4,7 +4,6 @@
 import Image from "next/image";
 
 import SinngleProdClient from "@/Components/SinngleProdClient";
-import prisma from "@/lib/prisma";
 import client from "@/app/db";
 
 const ProductSpecific = async ({ params }) => {
