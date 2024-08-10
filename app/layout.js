@@ -8,6 +8,8 @@ import LoadingBarWrapper from "@/context/LoadingBar/LoadingBarWrapper";
 import LoadingBarComponent from "@/Components/LoadingBarComponent";
 import CartWrapper from "@/context/Cart/CartWrapper";
 import SessionWrapper from "@/Components/SessionWrapper";
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 // import LoadingBar from "react-top-loading-bar";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -32,7 +34,7 @@ export default function RootLayout({ children }) {
                   <LoadingBarComponent />
                   <div className="dark:bg-gray-900 dark:text-white">
                     <Header />
-                    <div className="lg:pt-20 md:py-32 pt-40">{children}</div>
+                    <div className="lg:pt-20 md:py-32 pt-40">{children}<Analytics /><SpeedInsights /></div>
                   </div>
                 </ModeProvider>
               </ModeWrapper>

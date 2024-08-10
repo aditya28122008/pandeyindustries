@@ -125,7 +125,8 @@ const Header = () => {
             </button>
             {!session ? (
               <>
-                <Link href={'/login'}
+                <Link
+                  href={"/auth/signin"}
                   id="dropdownDefaultButton"
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   type="button"
@@ -142,13 +143,24 @@ const Header = () => {
                     type="button"
                     onClick={toggleDropdown}
                   >
-                    <Image
-                      alt=""
-                      height={100}
-                      width={100}
-                      className="h-10 w-10 rounded-full"
-                      src={session.user.image}
-                    />
+                    {session.user.image ? (
+                      <>
+                        <Image
+                          alt=""
+                          height={100}
+                          width={100}
+                          className="h-10 w-10 rounded-full"
+                          src={session.user.image}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <div className="dark:text-white text-black">
+                          {session.user.email}
+                        </div>
+                      </>
+                    )}
+
                     <svg
                       className="w-2.5 h-2.5 ms-3 invert dark:invert-0"
                       aria-hidden="true"

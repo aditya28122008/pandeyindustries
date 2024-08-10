@@ -1,38 +1,23 @@
+import client from "@/app/db";
 import prisma from "@/lib/prisma";
+import vars from "@/vars";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
   const data = await request.formData();
   const file = data.get("image");
-  // const arrBuffer = await file.arrayBuffer();
-  // const fileBites = Buffer.from(arrBuffer);
-  // const fileName = `/media/products/${Date.now().toString()}_${file.name
-  //   .replace(" ", "_")
-  //   .toString()}`;
-  // await fs.writeFile(`./public${fileName}`, fileBites, (err) => {
-  //   console.log(err);
-  // });
-
-  // try {
-  //   const upLoad = await cloudinary.upload(`./public${fileName}`);
-  //   // console.log(upLoad.secure_url);
-  //   dbFilename = upLoad.secure_url
-  //   await fs.unlink(`./public${fileName}`, (err) => console.log(err));
-  // } catch (error) {
-  //   console.log(error);
-  // }
   function slugify(str) {
-    str = str.replace(/^\s+|\s+$/g, ""); // Trim leading/trailing white spaces
-    str = str.toLowerCase(); // Convert to lowercase
-    str = str.replace(/[^\w\s-]/g, ""); // Remove non-word characters (except spaces and hyphens)
-    str = str.replace(/[\s_-]+/g, "-"); // Replace spaces and underscores with a single hyphen
+    str = str.replace(/^\s+|\s+$/g, "");
+    str = str.toLowerCase();
+    str = str.replace(/[^\w\s-]/g, "");
+    str = str.replace(/[\s_-]+/g, "-"); 
     return str;
   }
   const uploadFile = async () => {
     const fileFormData = new FormData();
     fileFormData.set("file", file);
     fileFormData.set("api_key", "742754732423212");
-    fileFormData.set("upload_preset", "pandeyIndustries");
+    fileFormData.set("upload_preset", `${vars.upload_preset}`);
     const upload = await fetch(
       `https://api.cloudinary.com/v1_1/dqvuoldfp/image/upload`,
       {
@@ -54,9 +39,10 @@ export async function POST(request) {
     slug: slugify(`${data.get("name")}-${Date.now()}`),
     brand: data.get("brand").toUpperCase(),
   };
-  // const addProd = await collection.insertOne(prod)
-  // const addProd = await Products.create(prod);
-  const addProd = await prisma.products.create({data: prod});
+  // await client.connect()
+  const db = client.db(`${process.env.DATABASE_NAME_MONGO}`)
+  const collection = db.collection("Products")
+  const addProd = await collection.insertOne(prod);
   // await client.close()
   return NextResponse.json(
     { success: true, addProd: addProd },

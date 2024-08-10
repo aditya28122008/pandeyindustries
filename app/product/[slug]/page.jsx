@@ -5,11 +5,13 @@ import Image from "next/image";
 
 import SinngleProdClient from "@/Components/SinngleProdClient";
 import prisma from "@/lib/prisma";
+import client from "@/app/db";
 
 const ProductSpecific = async ({ params }) => {
   const slug = params.slug.toString();
-
-  const product = await prisma.products.findUnique({where: {slug: slug}})
+  const db = client.db(`${process.env.DATABASE_NAME_MONGO}`)
+  const collection = db.collection("Products")
+  const product = await collection.findOne({slug: slug})
 
 
   return (

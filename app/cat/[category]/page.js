@@ -1,12 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 'use server'
+import client from "@/app/db";
 import ProductItem from "@/Components/ProductItem";
-import prisma from "@/lib/prisma";
 // import { MongoClient } from "mongodb";
-
-
-
-
 
 
 const CategoryProds = async ({ params }) => {
@@ -16,7 +12,9 @@ const CategoryProds = async ({ params }) => {
   // const collection = db.collection("products")
   // const prods = await collection.find({category: category}).toArray();
   // await client.close()
-  const prods = await prisma.products.findMany({where: {category: category}})
+  const db = client.db(`${process.env.DATABASE_NAME_MONGO}`)
+  const collection = db.collection("Products")
+  const prods = await collection.find({category: category}).toArray();
   return (
     <section className="text-gray-600 body-font dark:bg-gray-900">
       <p className="text-center font-bold text-4xl md:text-6xl lg:text-8xl font-mono italic dark:text-white text-black my-12 -mb-4">

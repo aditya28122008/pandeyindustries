@@ -9,19 +9,18 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgres://default:Fe4aKD6GdQVJ@ep-proud-forest-a1k9zqd9-pooler.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require/pandeyindustries"
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
-
 model Products {
   id        Int       @id @default(autoincrement())
   name      String
   category  String
   desc      String
   price     Int
-  pincodes  String[]
+  pincodes  String     // Store comma-separated pincodes
   image     String
-  slug      String    @unique
+  slug      String     @unique
   brand     String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -35,13 +34,14 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  // Optional for WebAuthn support
   Authenticator Authenticator[]
- 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  is_seller     Boolean         @default(false)
+  payment       String          @default("") // Store comma-separated payment methods
+  delivery      String          @default("") // Store comma-separated delivery options
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 }
- 
+
 model Account {
   userId            String
   type              String
@@ -56,7 +56,7 @@ model Account {
   session_state     String?
  
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
  
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
@@ -70,7 +70,7 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  updatedAt DateTime @default(now())
 }
  
 model VerificationToken {
@@ -81,7 +81,6 @@ model VerificationToken {
   @@id([identifier, token])
 }
  
-// Optional for WebAuthn support
 model Authenticator {
   credentialID         String  @unique
   userId               String
