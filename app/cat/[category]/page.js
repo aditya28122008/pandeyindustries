@@ -4,7 +4,7 @@ import client from "@/app/db";
 import ProductItem from "@/Components/ProductItem";
 // import { MongoClient } from "mongodb";
 
-export async function generateMetadata() {
+export async function generateMetadata({ params }) {
   return {
     title: "Latest Gadgets and Electronics | Pandey Industries",
     description:
@@ -17,7 +17,7 @@ export async function generateMetadata() {
       url: `${process.env.WEBPAGE_URL}/cat/gadgets`,
       images: [
         {
-          url: "http://localhost:3000/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdqvuoldfp%2Fimage%2Fupload%2Fv1723276102%2FPandeyIndustries%2Fwaul0lg2ureakqine1cx.jpg&w=640&q=100",
+          url: "https://pandeyindustries.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdqvuoldfp%2Fimage%2Fupload%2Fv1723276102%2FPandeyIndustries%2Fwaul0lg2ureakqine1cx.jpg&w=640&q=100",
           width: 800,
           height: 600,
           alt: "Gadgets Banner",
@@ -30,7 +30,8 @@ export async function generateMetadata() {
       title: "Latest Gadgets and Electronics | Your Store Name",
       description:
         "Discover the newest gadgets and electronics. Shop cutting-edge tech products, from smart devices to innovative accessories, all in one place.",
-      image: "http://localhost:3000/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdqvuoldfp%2Fimage%2Fupload%2Fv1723276119%2FPandeyIndustries%2Fti1e9djsdfphg2sjkfjg.jpg&w=640&q=100",
+      image:
+        "https://pandeyindustries.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdqvuoldfp%2Fimage%2Fupload%2Fv1723276102%2FPandeyIndustries%2Fwaul0lg2ureakqine1cx.jpg&w=640&q=100",
     },
   };
 }

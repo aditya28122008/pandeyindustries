@@ -5,6 +5,7 @@ import Image from "next/image";
 const ProductItem = (props) => {
   return (
     <Link
+      prefetch
       href={`/product/${props.slug}`}
       className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-md dark:shadow-none dark:bg-gray-800 rounded-md"
     >

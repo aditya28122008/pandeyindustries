@@ -75,24 +75,28 @@ const Header = () => {
           </Link>
           <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
             <Link
+              prefetch
               href={"/"}
               className="mr-5 hover:underline hover:underline-offset-4 font-bold"
             >
               Home
             </Link>
             <Link
+              prefetch
               href={"/about"}
               className="mr-5 hover:underline hover:underline-offset-4 font-bold"
             >
               About Us
             </Link>
             <Link
+              prefetch
               href={"/cat/gadgets"}
               className="mr-5 hover:underline hover:underline-offset-4 font-bold"
             >
               Gadgets
             </Link>
             <Link
+              prefetch
               href={"/cat/fashion"}
               className="mr-5 hover:underline hover:underline-offset-4 font-bold"
             >
@@ -127,6 +131,7 @@ const Header = () => {
               <>
                 <Link
                   href={"/auth/signin"}
+                  prefetch
                   id="dropdownDefaultButton"
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   type="button"
