@@ -2,6 +2,7 @@
 "use server";
 import client from "@/app/db";
 import ProductItem from "@/Components/ProductItem";
+import prisma from "@/lib/prisma";
 // import { MongoClient } from "mongodb";
 
 export async function generateMetadata({ params }) {
@@ -38,9 +39,10 @@ export async function generateMetadata({ params }) {
 
 const CategoryProds = async ({ params }) => {
   const category = params.category;
-  const db = client.db(`${process.env.DATABASE_NAME_MONGO}`);
-  const collection = db.collection("Products");
-  const prods = await collection.find({ category: category }).toArray();
+  const prods = await prisma.products.findMany({
+    where: { category: category },
+    orderBy: {price: 'asc'}
+  });
   return (
     <section className="text-gray-600 body-font dark:bg-gray-900">
       <p className="text-center font-bold text-4xl md:text-6xl lg:text-8xl font-mono italic dark:text-white text-black my-12 -mb-4">

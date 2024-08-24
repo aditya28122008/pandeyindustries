@@ -1,4 +1,4 @@
-const upload_preset = "pandeyIndustries"
+const upload_preset = "pandeyIndustries_dev"
 const GITHUB_ID = `${process.env.GITHUB_ID}`
 const GITHUB_SECRET = `${process.env.GITHUB_SECRET}`
 const GOOGLE_CLIENT_ID =`${process.env.GOOGLE_CLIENT_ID}`

@@ -1,4 +1,5 @@
-import client from "@/app/db";
+// import client from "@/app/db";
+import prisma from "@/lib/prisma";
 
 import vars from "@/vars";
 import { NextResponse } from "next/server";
@@ -40,9 +41,7 @@ export async function POST(request) {
     brand: data.get("brand").toUpperCase(),
   };
   // await client.connect()
-  const db = client.db(`${process.env.DATABASE_NAME_MONGO}`)
-  const collection = db.collection("Products")
-  const addProd = await collection.insertOne(prod);
+  const addProd = await prisma.products.create({data:prod});
   // await client.close()
   return NextResponse.json(
     { success: true, addProd: addProd },

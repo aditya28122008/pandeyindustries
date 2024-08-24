@@ -4,13 +4,66 @@
 import Image from "next/image";
 
 import SinngleProdClient from "@/Components/SinngleProdClient";
-import client from "@/app/db";
+import prisma from "@/lib/prisma";
+// import client from "@/app/db";
+
+
+
+export async function generateMetadata({ params }) {
+  const slug = params.slug.toString();
+  
+  // Fetch product data based on the slug
+  const product = await prisma.products.findUnique({
+    where: {
+      slug: slug,
+    },
+  });
+
+  // Return metadata if product is found
+  if (product) {
+    return {
+      title: `${product.name} - Pandey Industries`,
+      description: product.desc || 'Check out this amazing product on Pandey Industries.',
+      openGraph: {
+        title: `${product.name} - Pandey Industries`,
+        description: product.desc || 'Explore this product on Pandey Industries.',
+        url: `${process.env.WEBPAGE_URL}/product/${slug}`,
+        images: [
+          {
+            url: product.image,
+            alt: product.name,
+          },
+        ],
+      },
+    };
+  }
+
+  // Fallback metadata if product is not found
+  return {
+    title: 'Product Not Found - Coding Adda',
+    description: 'The product you are looking for does not exist.',
+    openGraph: {
+      title: 'Product Not Found - Coding Adda',
+      description: 'The product you are looking for does not exist.',
+      url: `https://codding-adda.vercel.app/produc/${slug}`,
+      images: [
+        {
+          url: '/images/product-not-found.png',
+          alt: 'Product Not Found',
+        },
+      ],
+    },
+  };
+}
 
 const ProductSpecific = async ({ params }) => {
   const slug = params.slug.toString();
-  const db = client.db(`${process.env.DATABASE_NAME_MONGO}`)
-  const collection = db.collection("Products")
-  const product = await collection.findOne({slug: slug})
+  
+  const product = await prisma.products.findUnique({
+    where: {
+      slug: slug, // Replace with the actual slug
+    },
+  })
 
 
   return (

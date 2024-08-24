@@ -47,19 +47,20 @@ const SinngleProdClient = (props) => {
         onSubmit={(e) => checkPincodeAvalability(e)}
       >
         <input
-          type="text"
+          type="number"
           name="pin"
           value={pincode}
           onChange={(e) => {
             setPincode(e.target.value);
           }}
           required
+          
           className="border-2 rounded-md focus:border-green-500 focus:border-2 border-black px-2 py-1 text-gray-500"
           placeholder="Check weather we deliver or not"
         />
         <button
           className="flex mr-0 text-white bg-green-500 border-0 py-2 px-6 focus:outline-none hover:bg-green-600 rounded"
-          onClick={checkPincodeAvalability}
+          type="submit"
         >
           Check Pincode Serviceablity
         </button>
