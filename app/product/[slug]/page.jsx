@@ -18,6 +18,7 @@ export async function generateMetadata({ params }) {
       slug: slug,
     },
   });
+  
 
   // Return metadata if product is found
   if (product) {

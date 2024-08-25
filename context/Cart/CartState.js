@@ -8,7 +8,7 @@ const CartState = ({ children }) => {
   const addItem = async (product) => {
     let newCart = [...cart];
     const filtPro = cart.filter((pro) => {
-      return pro._id === product._id;
+      return pro.id === product.id;
     });
     let currPro = filtPro[0];
     if (currPro) {
@@ -32,12 +32,12 @@ const CartState = ({ children }) => {
     let newCart = [...cart];
     if (cart.includes(product) && product.qty === 1) {
       newCart = cart.filter((prod) => {
-        return prod._id !== product._id;
+        return prod.id !== product.id;
       });
       setCart(newCart);
     } else if (cart.includes(product) && product.qty !== 1) {
       let currProd = cart.filter((prod) => {
-        return prod._id === product._id;
+        return prod.id === product.id;
       });
       const indProd = cart.indexOf(currProd);
       currProd[0].qty = currProd[0].qty - 1;

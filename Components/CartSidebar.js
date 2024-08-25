@@ -38,7 +38,7 @@ const CartSidebar = ({ sideBarRef, showSideBar }) => {
           ) : (
             cart.map((item) => {
               return (
-                <li className="productItem my-4 scale-110" key={item._id}>
+                <li className="productItem my-4 scale-110" key={item.id}>
                   <div className="flex justify-between space-x-2 items-center flex-col lg:flex-row">
                     <div className="image relative rounded-md">
                       <Image
