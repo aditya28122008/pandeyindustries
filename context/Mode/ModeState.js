@@ -1,27 +1,25 @@
 "use client";
 import React, { useState } from "react";
 import modeContext from "./modeContext";
-
-
+import { useTheme } from "next-themes";
 
 const ModeState = ({ children }) => {
-  const [mode, setMode] = useState("light");
+  const { setTheme, resolvedTheme } = useTheme();
   const changeMode = () => {
-    if (mode === "light") {
+    console.log("working");
+    if (resolvedTheme === "light") {
       setMode("dark");
-      localStorage.setItem("mode", "dark")
-    }
-    else if (mode === "dark") {
+      setTheme("dark");
+    } else if (resolvedTheme === "dark") {
       setMode("light");
-      localStorage.setItem("mode", "light")
+      setTheme("light");
     }
   };
   return (
-    <modeContext.Provider value={{ changeMode, mode, setMode }}>
+    <modeContext.Provider value={{ changeMode }}>
       {children}
     </modeContext.Provider>
   );
 };
-
 
 export default ModeState;

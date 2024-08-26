@@ -1,12 +1,8 @@
 "use client";
-import modeContext from "@/context/Mode/modeContext";
-import { useContext } from "react";
+import { ThemeProvider } from "next-themes";
 
 const ModeProvider = ({ children }) => {
-  const modeCon = useContext(modeContext);
-  const { mode } = modeCon;
-
-  return <div className={`${mode}`}>{children}</div>;
+  return <ThemeProvider attribute="class" defaultTheme="system" enableSystem>{children}</ThemeProvider>;
 };
 
 export default ModeProvider;

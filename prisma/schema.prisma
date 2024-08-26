@@ -21,11 +21,13 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  // Optional for WebAuthn support
+  phone         String          @default("")
   Authenticator Authenticator[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  Address         Address[]
+  ProfileComplete Boolean   @default(false)
 }
 
 model Account {
@@ -49,6 +51,7 @@ model Account {
 
   @@unique([provider, providerAccountId])
 }
+
 model Session {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
@@ -85,20 +88,38 @@ model Authenticator {
   @@unique([userId, credentialID])
 }
 
-
-
-
 model Products {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  category  String
-  price     Int
-  desc      String
-  pincodes  String[] // This represents an array of strings
-  image     String
-  slug      String @unique
-  brand     String
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  category String
+  price    Int
+  desc     String
+  pincodes String[] // This represents an array of strings
+  image    String
+  slug     String   @unique
+  brand    String
 
   @@map("products") // Map to the corresponding MongoDB collection
 }
 
+// model Customer {
+//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
+//   userId    String   @unique @db.ObjectId
+//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   phone     String
+//   // Array of address objects with ID
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+
+//   @@map("customers") // Map to the corresponding MongoDB collection
+// }
+
+model Address {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  street     String  @default("")
+  city       String  @default("")
+  state      String  @default("")
+  zip        String  @default("")
+  User       User?   @relation(fields: [customerId], references: [id])
+  customerId String? @db.ObjectId
+}

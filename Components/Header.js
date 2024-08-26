@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use client";
-import modeContext from "@/context/Mode/modeContext";
 import cartContext from "@/context/Cart/cartContext";
 import Link from "next/link";
 import { IoMdCart } from "react-icons/io";
@@ -8,21 +7,21 @@ import Image from "next/image";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import CartSidebar from "./CartSidebar";
+import { useTheme } from "next-themes";
 
 const Header = () => {
   const { data: session } = useSession();
   const CartCon = useContext(cartContext);
   const { checkCart } = CartCon;
-  const modeCon = useContext(modeContext);
-  const { setMode, changeMode } = modeCon;
   const sideBarRef = useRef(null);
+  const { setTheme, resolvedTheme } = useTheme();
   useEffect(() => {
     // signOut()
-    if (localStorage.getItem("mode")) {
-      setMode(localStorage.getItem("mode"));
-    } else {
-      setMode("light");
-    }
+    // if (localStorage.getItem("mode")) {
+    //   setMode(localStorage.getItem("mode"));
+    // } else {
+    //   setMode("light");
+    // }
     checkCart();
   }, []);
   const showSideBar = () => {
@@ -36,6 +35,14 @@ const Header = () => {
   const [dropDown, setDropDown] = useState(false);
   const toggleDropdown = () => {
     setDropDown(!dropDown);
+  };
+  const changeMode = () => {
+    console.log("working");
+    if (resolvedTheme === "light") {
+      setTheme("dark");
+    } else if (resolvedTheme === "dark") {
+      setTheme("light");
+    }
   };
 
   return (
