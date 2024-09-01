@@ -36,7 +36,7 @@ export async function generateMetadata({ params }) {
         image: "https://pandeyindustries.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdqvuoldfp%2Fimage%2Fupload%2Fv1724865787%2FPandeyIndustries%2Fp3qmenb32hiz4z73pcrh.webp&w=828&q=100",
       },
     };
-  } else {
+  } else if(params.category === "gadgets") {
     return {
       title: "Latest Gadgets and Electronics | Pandey Industries",
       description:
