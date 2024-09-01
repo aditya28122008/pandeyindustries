@@ -37,7 +37,6 @@ const Header = () => {
     setDropDown(!dropDown);
   };
   const changeMode = () => {
-    console.log("working");
     if (resolvedTheme === "light") {
       setTheme("dark");
     } else if (resolvedTheme === "dark") {
