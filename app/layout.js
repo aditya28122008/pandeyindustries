@@ -5,9 +5,11 @@ import Header from "@/Components/Header";
 import LoadingBarWrapper from "@/context/LoadingBar/LoadingBarWrapper";
 import CartWrapper from "@/context/Cart/CartWrapper";
 import SessionWrapper from "@/Components/SessionWrapper";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+// import { Analytics } from "@vercel/analytics/react";
+// import { SpeedInsights } from "@vercel/speed-insights/next";
 import ModeProvider from "@/Components/ModeProvider";
+import 'react-toastify/dist/ReactToastify.css';
+import ToastifyClient from "@/Components/ToastifyClient";
 // import LoadingBar from "react-top-loading-bar";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -31,10 +33,11 @@ export default function RootLayout({ children }) {
                 {/* <LoadingBarComponent> */}
                 <div className="dark:bg-gray-900 dark:text-white">
                   <Header />
+                  <ToastifyClient />
                   <div className="lg:pt-20 md:py-32 pt-40">
                     {children}
-                    <Analytics />
-                    <SpeedInsights />
+                    {/* <Analytics />
+                    <SpeedInsights /> */}
                   </div>
                 </div>
                 {/* </LoadingBarComponent> */}

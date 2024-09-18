@@ -28,7 +28,7 @@ const ProductItem = (props) => {
         <h2 className="text-gray-900 dark:text-gray-100 title-font text-lg font-medium">
           {props.name}
         </h2>
-        <p className="mt-1 text-gray-900 dark:text-gray-400">₹{props.price}</p>
+        <p className="mt-1 dark:text-green-400 text-lg text-green-600 ">₹{props.disPrice} <span className="line-through text-sm text-red-600 dark:text-red-400">₹{props.OrPrice}</span></p>
       </div>
     </Link>
   );

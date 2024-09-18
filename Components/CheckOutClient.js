@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 const CheckOutClient = () => {
   const cartCon = useContext(cartContext);
-  const {cart, subTotal} = cartCon;
+  const {cart, subTotal, highSubTotal} = cartCon;
   const tax = 199
   const storePk = 99;
   return (
@@ -16,14 +16,14 @@ const CheckOutClient = () => {
               Subtotal
             </dt>
             <dd className="text-base font-medium text-gray-900 dark:text-white">
-              ₹{subTotal}
+              ₹{highSubTotal}
             </dd>
           </dl>
           <dl className="flex items-center justify-between gap-4 py-3">
             <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
               Savings
             </dt>
-            <dd className="text-base font-medium text-green-500">₹0</dd>
+            <dd className="text-base font-medium text-green-500">-₹{highSubTotal - subTotal}</dd>
           </dl>
           <dl className="flex items-center justify-between gap-4 py-3">
             <dt className="text-base font-normal text-gray-500 dark:text-gray-400">

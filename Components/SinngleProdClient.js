@@ -5,8 +5,10 @@ import cartContext from "@/context/Cart/cartContext";
 
 const SinngleProdClient = (props) => {
   let pro = JSON.parse(props.product);
-  const price = parseInt(pro.price)
-  pro.price = price
+  const price = parseInt(pro.OrPrice)
+  const diP = parseInt(pro.disPrice)
+  pro.OrPrice = price
+  pro.disPrice = diP
   const product = pro
   const cartCon = useContext(cartContext);
   const { addItem } = cartCon;
@@ -27,8 +29,8 @@ const SinngleProdClient = (props) => {
   return (
     <>
       <div className="flex">
-        <span className="title-font font-medium text-2xl text-gray-900 dark:text-gray-200">
-          ₹{String(product.price)}
+        <span className="title-font font-medium text-2xl text-green-600 dark:text-green-400">
+          ₹{String(product.disPrice)} <span className="text-sm text-red-600 dark:text-red-400 line-through">₹{pro.OrPrice}</span>
         </span>
         <button
           onClick={() => {

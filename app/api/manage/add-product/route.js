@@ -11,7 +11,7 @@ export async function POST(request) {
     str = str.replace(/^\s+|\s+$/g, "");
     str = str.toLowerCase();
     str = str.replace(/[^\w\s-]/g, "");
-    str = str.replace(/[\s_-]+/g, "-"); 
+    str = str.replace(/[\s_-]+/g, "-");
     return str;
   }
   const uploadFile = async () => {
@@ -30,18 +30,20 @@ export async function POST(request) {
     return json.secure_url;
   };
   const fileName = await uploadFile();
-  const prod = {
-    name: data.get("name"),
-    category: data.get("category"),
-    price: parseInt(data.get("price")),
-    desc: data.get("desc"),
-    pincodes: data.get("pincodes").split(","),
-    image: fileName,
-    slug: slugify(`${data.get("name")}-${Date.now()}`),
-    brand: data.get("brand").toUpperCase(),
-  };
   // await client.connect()
-  const addProd = await prisma.products.create({data:prod});
+  const addProd = await prisma.products.create({
+    data: {
+      name: data.get("name"),
+      category: data.get("category"),
+      OrPrice: parseInt(data.get("orprice")),
+      desc: data.get("desc"),
+      pincodes: data.get("pincodes").split(","),
+      image: fileName,
+      slug: slugify(`${data.get("name")}-${Date.now()}`),
+      brand: data.get("brand").toUpperCase(),
+      disPrice: data.get("disprice")
+    },
+  });
   // await client.close()
   return NextResponse.json(
     { success: true, addProd: addProd },

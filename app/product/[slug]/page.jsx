@@ -11,7 +11,6 @@ import prisma from "@/lib/prisma";
 
 export async function generateMetadata({ params }) {
   const slug = params.slug.toString();
-  
   // Fetch product data based on the slug
   const product = await prisma.products.findUnique({
     where: {
@@ -41,12 +40,12 @@ export async function generateMetadata({ params }) {
 
   // Fallback metadata if product is not found
   return {
-    title: 'Product Not Found - Coding Adda',
+    title: 'Product Not Found - Pandey Industries',
     description: 'The product you are looking for does not exist.',
     openGraph: {
-      title: 'Product Not Found - Coding Adda',
+      title: 'Product Not Found - Pandey Industries',
       description: 'The product you are looking for does not exist.',
-      url: `https://codding-adda.vercel.app/produc/${slug}`,
+      url: `${process.env.WEBPAGE_URL}/product/${slug}`,
       images: [
         {
           url: '/images/product-not-found.png',
@@ -65,7 +64,6 @@ const ProductSpecific = async ({ params }) => {
       slug: slug, // Replace with the actual slug
     },
   })
-
 
   return (
     <div>

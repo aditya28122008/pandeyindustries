@@ -92,12 +92,13 @@ model Products {
   id       String   @id @default(auto()) @map("_id") @db.ObjectId
   name     String
   category String
-  price    Int
+  OrPrice    Int
   desc     String
   pincodes String[] // This represents an array of strings
   image    String
   slug     String   @unique
   brand    String
+  disPrice String
 
   @@map("products") // Map to the corresponding MongoDB collection
 }
@@ -116,6 +117,7 @@ model Products {
 
 model Address {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  hno        String  @default("")
   street     String  @default("")
   city       String  @default("")
   state      String  @default("")
@@ -123,3 +125,4 @@ model Address {
   User       User?   @relation(fields: [customerId], references: [id])
   customerId String? @db.ObjectId
 }
+

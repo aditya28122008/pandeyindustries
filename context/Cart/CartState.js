@@ -5,6 +5,17 @@ import cartContext from "./cartContext";
 const CartState = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
+  const [highSubTotal, setHighSubTotal] = useState(0);
+  const removeProduct = async (prod) => {
+    const newArr = cart.filter((carProd) => {
+      return carProd.id !== prod.id;
+    });
+    // console.log(newArr);
+    // console.log(newCart);
+    setCart(newArr);
+    updateSubtotal(newArr);
+    localStorage.setItem("cart", JSON.stringify(newArr));
+  };
   const addItem = async (product) => {
     let newCart = [...cart];
     const filtPro = cart.filter((pro) => {
@@ -52,7 +63,7 @@ const CartState = ({ children }) => {
   };
   const clearCart = () => {
     const newCart = [];
-    updateSubtotal(newCart);
+    updateSubtotal(newCart)
     setCart(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
   };
@@ -68,17 +79,34 @@ const CartState = ({ children }) => {
       let subT = 0;
       for (let i = 0; i < currCart.length; i++) {
         const prod = currCart[i];
-        let addSubT = prod.price * prod.qty;
+        let addSubT = prod.disPrice * prod.qty;
         subT += addSubT;
       }
       setSubTotal(subT);
+      let hsubT = 0;
+      for (let i = 0; i < currCart.length; i++) {
+        const prod = currCart[i];
+        let addSubT = prod.OrPrice * prod.qty;
+        hsubT += addSubT;
+      }
+      setHighSubTotal(hsubT);
     } else {
       setSubTotal(0);
+      setHighSubTotal(0)
     }
   };
   return (
     <cartContext.Provider
-      value={{ addItem, removeItem, clearCart, cart, checkCart, subTotal }}
+      value={{
+        addItem,
+        removeItem,
+        clearCart,
+        cart,
+        checkCart,
+        subTotal,
+        highSubTotal,
+        removeProduct,
+      }}
     >
       {children}
     </cartContext.Provider>

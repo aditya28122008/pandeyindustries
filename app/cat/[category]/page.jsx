@@ -33,10 +33,11 @@ export async function generateMetadata({ params }) {
         title: "Trendy Fashion and Apparel | Pandey Industries",
         description:
           "Explore the latest trends in fashion and apparel. Shop stylish clothing, accessories, and footwear to elevate your wardrobe.",
-        image: "https://pandeyindustries.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdqvuoldfp%2Fimage%2Fupload%2Fv1724865787%2FPandeyIndustries%2Fp3qmenb32hiz4z73pcrh.webp&w=828&q=100",
+        image:
+          "https://pandeyindustries.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdqvuoldfp%2Fimage%2Fupload%2Fv1724865787%2FPandeyIndustries%2Fp3qmenb32hiz4z73pcrh.webp&w=828&q=100",
       },
     };
-  } else if(params.category === "gadgets") {
+  } else if (params.category === "gadgets") {
     return {
       title: "Latest Gadgets and Electronics | Pandey Industries",
       description:
@@ -74,7 +75,7 @@ const CategoryProds = async ({ params }) => {
   const category = params.category;
   const prods = await prisma.products.findMany({
     where: { category: category },
-    orderBy: { price: "asc" },
+    orderBy: { disPrice: "asc" },
   });
   return (
     <section className="text-gray-600 body-font dark:bg-gray-900">
@@ -92,7 +93,8 @@ const CategoryProds = async ({ params }) => {
                 image={`${prod.image}`}
                 name={prod.name}
                 category={prod.category}
-                price={prod.price}
+                OrPrice={prod.OrPrice}
+                disPrice={prod.disPrice}
                 slug={prod.slug}
               />
             );
@@ -100,7 +102,6 @@ const CategoryProds = async ({ params }) => {
         </div>
       </div>
     </section>
-    // <></>
   );
 };
 

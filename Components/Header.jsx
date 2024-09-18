@@ -5,7 +5,7 @@ import Link from "next/link";
 import { IoMdCart } from "react-icons/io";
 import Image from "next/image";
 import { useContext, useEffect, useRef, useState } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { useSession, signOut, signIn } from "next-auth/react";
 import CartSidebar from "./CartSidebar";
 import { useTheme } from "next-themes";
 
@@ -137,7 +137,8 @@ const Header = () => {
               <>
                 <Link
                   href={"/auth/signin"}
-                  prefetch
+                  // prefetch
+                  // onClick={()=>signIn()}
                   id="dropdownDefaultButton"
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   type="button"
@@ -201,17 +202,21 @@ const Header = () => {
                         aria-labelledby="dropdownDefaultButton"
                       >
                         <li>
-                          <button className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white">
+                          <button onClick={toggleDropdown} className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white">
                             Dashboard
                           </button>
                         </li>
+                        {!session.user.ProfileComplete && (
+                          <>
+                            <Link href={'/auth/customer/complete'}>
+                              <button onClick={toggleDropdown} className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white">
+                                Fill Up the Remainigs...!
+                              </button>
+                            </Link>
+                          </>
+                        )}
                         <li>
-                          <button className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white">
-                            Settings
-                          </button>
-                        </li>
-                        <li>
-                          <button className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white">
+                          <button onClick={toggleDropdown} className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white">
                             Earnings
                           </button>
                         </li>

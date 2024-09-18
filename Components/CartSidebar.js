@@ -10,7 +10,7 @@ import { MdDeleteForever } from "react-icons/md";
 
 const CartSidebar = ({ sideBarRef, showSideBar }) => {
   const CartCon = useContext(cartContext);
-  const { cart, clearCart, addItem, removeItem, subTotal } = CartCon;
+  const { cart, clearCart, addItem, removeItem, subTotal, highSubTotal } = CartCon;
   return (
     <div
       className="sidebar overflow-y-auto fixed z-20 translate-x-full right-0 top-0 dark:bg-gray-700 dark:text-white bottom-0 md:w-1/4 w-screen bg-gray-100 transition-transform duration-300"
@@ -75,12 +75,12 @@ const CartSidebar = ({ sideBarRef, showSideBar }) => {
             })
           )}
         </ol>
-        <p className="text-xl font-bold mt-8 -mb-4">Subtotal: ₹{subTotal} </p>
+        <p className="text-xl font-bold mt-8 -mb-4">Subtotal: <span className="text-green-600 dark:text-green-400">₹{subTotal}</span> <span className="text-sm text-red-600 dark:text-red-400 line-through">₹{highSubTotal}</span> </p>
         {cart.length === 0 ? (
           ""
         ) : (
           <div className="flex justify-center mt-8">
-            <Link href={"/checkout"}>
+            <Link href={"/cart-confirm"}>
               <button
                 onClick={showSideBar}
                 className="flex mx-2 items-center text-white bg-green-500 border-0 py-1 px-3  focus:outline-none hover:bg-green-600 rounded text-sm"
