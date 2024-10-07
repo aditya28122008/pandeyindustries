@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
         url: `${process.env.WEBPAGE_URL}/cat/fashion`,
         images: [
           {
-            url: "https://pandeyindustries.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdqvuoldfp%2Fimage%2Fupload%2Fv1724865787%2FPandeyIndustries%2Fp3qmenb32hiz4z73pcrh.webp&w=828&q=100",
+            url: "https://pandeyindustries.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fdqvuoldfp%2Fimage%2Fupload%2Fv1728311508%2FPandeyIndustries%2Flhpwotpru292flhmtacu.jpg&w=828&q=100",
             width: 800,
             height: 600,
             alt: "Fashion Banner",
