@@ -23,6 +23,7 @@ model User {
   sessions      Session[]
   phone         String          @default("")
   Authenticator Authenticator[]
+  payments      PaymentMethod[] // Relation with PaymentMethod
 
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -103,18 +104,6 @@ model Products {
   @@map("products") // Map to the corresponding MongoDB collection
 }
 
-// model Customer {
-//   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-//   userId    String   @unique @db.ObjectId
-//   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-//   phone     String
-//   // Array of address objects with ID
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   @@map("customers") // Map to the corresponding MongoDB collection
-// }
-
 model Address {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
   hno        String  @default("")
@@ -126,3 +115,16 @@ model Address {
   customerId String? @db.ObjectId
 }
 
+// New PaymentMethod model to store user's payment methods
+model PaymentMethod {
+  id          String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String  @db.ObjectId
+  cardType    String  // e.g., "credit", "debit"
+  cardNumber  String  @unique // masked number (e.g., "**** **** **** 1234")
+  expiration  String  // MM/YY format
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
