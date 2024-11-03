@@ -2,19 +2,27 @@
 import cartContext from "@/context/Cart/cartContext";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { AiFillMinusCircle, AiFillPlusCircle } from "react-icons/ai";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import { IoIosCloseCircle } from "react-icons/io";
 import { MdDeleteForever } from "react-icons/md";
 
-const CartSidebar = ({ sideBarRef, showSideBar }) => {
+const CartSidebar = () => {
+  const showSideBar = () => {
+    const sideBar = document.getElementById("sidebar");
+    if (sideBar.classList.contains("translate-x-full")) {
+      sideBar.classList.remove("translate-x-full");
+    } else if (!sideBar.classList.contains("translate-x-full")) {
+      sideBar.classList.add("translate-x-full");
+    }
+  };
   const CartCon = useContext(cartContext);
-  const { cart, clearCart, addItem, removeItem, subTotal, highSubTotal } = CartCon;
+  const { cart, clearCart, addItem, removeItem, subTotal, highSubTotal } =
+    CartCon;
   return (
     <div
       className="sidebar overflow-y-auto fixed z-20 translate-x-full right-0 top-0 dark:bg-gray-700 dark:text-white bottom-0 md:w-1/4 w-screen bg-gray-100 transition-transform duration-300"
-      ref={sideBarRef}
       id="sidebar"
     >
       <div className="my-2 flex items-center justify-center md:justify-between px-4 pt-4 right-0 left-0">
@@ -75,7 +83,15 @@ const CartSidebar = ({ sideBarRef, showSideBar }) => {
             })
           )}
         </ol>
-        <p className="text-xl font-bold mt-8 -mb-4">Subtotal: <span className="text-green-600 dark:text-green-400">₹{subTotal}</span> <span className="text-sm text-red-600 dark:text-red-400 line-through">₹{highSubTotal}</span> </p>
+        <p className="text-xl font-bold mt-8 -mb-4">
+          Subtotal:{" "}
+          <span className="text-green-600 dark:text-green-400">
+            ₹{subTotal}
+          </span>{" "}
+          <span className="text-sm text-red-600 dark:text-red-400 line-through">
+            ₹{highSubTotal}
+          </span>{" "}
+        </p>
         {cart.length === 0 ? (
           ""
         ) : (

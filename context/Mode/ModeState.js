@@ -6,7 +6,6 @@ import { useTheme } from "next-themes";
 const ModeState = ({ children }) => {
   const { setTheme, resolvedTheme } = useTheme();
   const changeMode = () => {
-    console.log("working");
     if (resolvedTheme === "light") {
       setMode("dark");
       setTheme("dark");

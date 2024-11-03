@@ -21,7 +21,7 @@ const ProductItem = (props) => {
       </div>
       <div className="mt-4">
         <h3 className="text-gray-500 dark:text-gray-400 text-xs tracking-widest title-font mb-1">
-          {`${props.category.slice(0, 1).toUpperCase()}${props.category.slice(
+          {`${props.category.name.slice(0, 1).toUpperCase()}${props.category.name.slice(
             1
           )}`}
         </h3>
