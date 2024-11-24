@@ -10,7 +10,7 @@ export const metadata = {
 export default async function Layout({ children }) {
   const user = await auth();
   if (user) {
-    if (user.user.email === "bloggerpandey.a@gmail.com") {
+    if (user.user.email === "bloggerpandey.a@gmail.com" || user.user.email === "saniaraza912@gmail.com") {
       return (
         <>
           <AdminSidebar />
