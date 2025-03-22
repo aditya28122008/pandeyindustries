@@ -13,13 +13,15 @@ const AllCategoriesTable = ({ categories }) => {
   const enableNav = async (id) => {
     const res = await fetch(`/api/admin/category/enable-nav/${id}`);
     const json = await res.json();
-    if (json.success) {
+    if (res.status === 200) {
       setCats((prevItems) =>
         prevItems.map((item) =>
           item.id === id ? { ...item, navView: true } : item
         )
       );
       toast.success("Enabled Successfully...!");
+    } else {
+      toast.error("Max Nav category limit exeeded")
     }
   };
 
@@ -50,7 +52,7 @@ const AllCategoriesTable = ({ categories }) => {
           toast.warning("Some products in this category still exists. First delete them to delete this category.")
         }
       } catch (error) {
-        console.log(error);
+        toast.error("Something went wrong...")
       }
     }
   };

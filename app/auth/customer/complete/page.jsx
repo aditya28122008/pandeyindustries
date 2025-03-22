@@ -15,7 +15,7 @@ export async function generateMetadata() {
 const CompleteCustomer = async () => {
   const user = await auth();
 
-  if (user) {
+  if (user && user.user.UserCategory !== "SELLER" && user.user.ProfileComplete === false) {
     const adds = await prisma.address.findMany({
       where: { customerId: user.user.id },
     });
@@ -33,6 +33,15 @@ const CompleteCustomer = async () => {
           cardNumber: e.get("cardNumber"),
         },
       });
+      const addresses = await prisma.address.findMany({
+        where: { customerId: user.user.id },
+      });
+      if (addresses.length > 0) {
+        await prisma.user.update({
+          where: { id: user.user.id },
+          data: { ProfileComplete: true },
+        });
+      }
       return { success: true };
     };
     const submitAction = async (e) => {
@@ -48,6 +57,15 @@ const CompleteCustomer = async () => {
           customerId: `${user.user.id}`,
         },
       });
+      const paymentMethod = await prisma.paymentMethod.findMany({
+        where: { userId: user.user.id },
+      });
+      if (paymentMethod.length > 0) {
+        await prisma.user.update({
+          where: { id: user.user.id },
+          data: { ProfileComplete: true },
+        });
+      }
       return { success: true };
     };
     return (

@@ -11,7 +11,6 @@ export async function generateMetadata() {
 
 const AllCategories = async () => {
   const categories = await prisma.productCategory.findMany();
-  // console.log(categories);
   return (
     <>
       <h1 className="text-center text-xl md:text-2xl lg:text-4xl my-4 mb-6">

@@ -13,6 +13,11 @@ datasource db {
   url      = env("MONGODB_URI")
 }
 
+enum UserCategory {
+  CONSUMER
+  SELLER
+}
+
 model User {
   id              String          @id @default(auto()) @map("_id") @db.ObjectId
   name            String?
@@ -28,6 +33,21 @@ model User {
   updatedAt       DateTime        @updatedAt
   Address         Address[]
   ProfileComplete Boolean         @default(false)
+  category        UserCategory    @default(CONSUMER)
+  shop            Shop?
+  shopId          String?         @db.ObjectId
+}
+
+model Shop {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  street      String
+  city        String
+  state       String
+  zip         String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String    @unique @db.ObjectId
+  products    Products[] // Relation field for the products in this shop
 }
 
 model Account {
@@ -96,6 +116,8 @@ model Products {
   disPrice   String
   categoryId String          @db.ObjectId
   category   ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  shopId     String          @db.ObjectId
+  shop       Shop            @relation(fields: [shopId], references: [id], onDelete: Cascade)
 
   @@map("products")
 }

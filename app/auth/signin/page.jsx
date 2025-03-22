@@ -22,7 +22,7 @@ const Login = () => {
           <div className="max-w-screen-xl m-0 sm:m-10 bg-white dark:bg-gray-800 shadow sm:rounded-lg flex justify-center flex-1">
             <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
               <div className="mt-12 flex flex-col items-center">
-                <h1 className="text-2xl xl:text-3xl font-extrabold">Log In</h1>
+                <h1 className="text-2xl xl:text-3xl font-extrabold">Sign In</h1>
                 <div className="w-full flex-1 mt-8">
                   <div className="flex flex-col items-center">
                     <button
@@ -49,7 +49,7 @@ const Login = () => {
                           />
                         </svg>
                       </div>
-                      <span className="ml-4">Log In with Google</span>
+                      <span className="ml-4">Sign In with Google</span>
                     </button>
                     <button
                       onClick={() => signIn("github")}
@@ -63,18 +63,18 @@ const Login = () => {
                           />
                         </svg>
                       </div>
-                      <span className="ml-4">Log In with GitHub</span>
+                      <span className="ml-4">Sign In with GitHub</span>
                     </button>
                     <>
                       <form method="post" action="/api/auth/signin/email">
-                        <input
+                        {/* <input
                           name="csrfToken"
                           type="hidden"
                           defaultValue={csrf}
-                        />
+                        /> */}
                         <div className="my-12 border-b text-center">
                           <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2 dark:bg-gray-800 dark:text-white">
-                            Or Log in with E-mail
+                            Or Sign in with E-mail
                           </div>
                         </div>
                         <div className="mx-auto max-w-xs">

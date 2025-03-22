@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MdDelete } from "react-icons/md";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { FaArrowCircleRight } from "react-icons/fa";
 
 const SpecificCatProdsTable = ({ prods }) => {
   const [products, setProducts] = useState(prods);
@@ -23,7 +24,7 @@ const SpecificCatProdsTable = ({ prods }) => {
           toast.success("Product Deleted Successfully...");
         }
       } catch (error) {
-        toast.error("Something Went wrong. Please try again later.")
+        toast.error("Something Went wrong. Please try again later.");
       }
     }
   };
@@ -90,7 +91,7 @@ const SpecificCatProdsTable = ({ prods }) => {
                     </td>
                     <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">
                       <Link prefetch href={`/product/${product.slug}`}>
-                        View
+                        <FaArrowCircleRight className="text-3xl cursor-pointer text-green-600 hover:text-green-400 bg-white rounded-full" />
                       </Link>
                     </td>
                     <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">

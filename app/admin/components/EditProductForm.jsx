@@ -1,29 +1,20 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const AddProductForm = ({ categories }) => {
+const EditProductForm = ({ categories, product }) => {
   const router = useRouter();
   const [image, setimage] = useState(null);
-  const [productCreds, setProductCreds] = useState({
-    name: "",
-    orprice: 0,
-    desc: "",
-    pincodes: "",
-    brand: "",
-    disprice: 0,
-    category: "--Please Select A Valid Category--",
-  });
+  const [productCreds, setProductCreds] = useState(product);
+
   const onChange = (e) => {
     setProductCreds({ ...productCreds, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
-    
-    if (
-      productCreds.category === "--Please Select A Valid Category--"
-    ) {
+    if (productCreds.category === "--Please Select A Valid Category--") {
       toast.error("Please select a valid category.");
     } else {
       try {
@@ -36,14 +27,16 @@ const AddProductForm = ({ categories }) => {
         productFormData.set("disprice", productCreds.disprice);
         productFormData.set("category", productCreds.category);
         productFormData.set("image", image);
-        const res = await fetch("/api/admin/product/add", {
+        const res = await fetch(`/api/admin/product/edit/${product.slug}`, {
           method: "POST",
           body: productFormData,
         });
         const json = await res.json();
-        if (json.success) {
-          toast.success("Product Added Successfully...");
-          router.push("/admin/product");
+        if (res.status === 200) {
+          console.log(json);
+          
+          // toast.success("Product Added Successfully...");
+          // router.push("/admin/product");
         }
       } catch (error) {
         toast.error("Something Went wrong. Please try again later.");
@@ -86,12 +79,12 @@ const AddProductForm = ({ categories }) => {
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="number"
-            name="orprice"
+            name="OrPrice"
             id="OrPrice"
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer"
             placeholder=" "
             required
-            value={productCreds.orprice}
+            value={productCreds.OrPrice}
             onChange={onChange}
           />
           <label
@@ -123,9 +116,9 @@ const AddProductForm = ({ categories }) => {
         <div className="relative z-0 w-full mb-5 group">
           <input
             type="number"
-            name="disprice"
+            name="disPrice"
             id="disPrice"
-            value={productCreds.disprice}
+            value={productCreds.disPrice}
             onChange={onChange}
             className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-green-500 focus:outline-none focus:ring-0 focus:border-green-600 peer"
             placeholder=" "
@@ -165,22 +158,19 @@ const AddProductForm = ({ categories }) => {
               onChange={onChange} // Ensure correct function name
               value={productCreds.category}
             >
-              {categories.length > 0 ? (
-                <>
-                  <option>-- Please Select A Valid Category --</option>
-                  {categories.map((cat) => {
-                    return (
-                      <option key={cat.id} value={cat.id}>
-                        {cat.name}
-                      </option>
-                    );
-                  })}
-                </>
-              ) : (
-                <>
-                  <option>-- NO CATEGORIES AVAILABLE --</option>
-                </>
-              )}
+              <>
+                {categories.map((cat) => {
+                  return (
+                    <option
+                      key={cat.id}
+                      value={cat.id}
+                      selected={cat.id === productCreds.categoryId}
+                    >
+                      {cat.name}
+                    </option>
+                  );
+                })}
+              </>
             </select>
             <label
               htmlFor="countries"
@@ -209,7 +199,18 @@ const AddProductForm = ({ categories }) => {
             name="desc"
           />
         </div>
-
+        <div className="relative z-0 w-full mb-5 group">
+          {product.image && (
+            <Image
+              src={product.image}
+              width={500}
+              height={500}
+              quality={100}
+              alt="Current Product"
+              className="w-fit mx-auto h-60 rounded-md"
+            />
+          )}
+        </div>
         <div className="relative z-0 w-full mb-5 group">
           <label
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -226,7 +227,6 @@ const AddProductForm = ({ categories }) => {
             }}
             name="image"
             accept="image/png, image/jpeg"
-            required
           />
           <p className="mt-1 text-sm text-gray-500 dark:text-gray-300">
             PNG, JPG.
@@ -237,11 +237,11 @@ const AddProductForm = ({ categories }) => {
           type="submit"
           className="text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
         >
-          Add Product
+          Save Product
         </button>
       </form>
     </>
   );
 };
 
-export default AddProductForm;
+export default EditProductForm;

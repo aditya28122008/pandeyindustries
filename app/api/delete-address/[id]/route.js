@@ -11,5 +11,4 @@ export async function GET(request, { params }) {
   } else {
     return NextResponse.json({ success: false });
   }
-  //   console.log(session);
 }

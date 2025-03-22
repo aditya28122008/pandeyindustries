@@ -3,9 +3,31 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
+import { FaArrowCircleRight, FaPencilAlt } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const AllProductsTable = ({ allProds }) => {
   const [allProducts, setAllProducts] = useState(allProds);
+  const deleteProduct = async (id) => {
+    if (confirm("Are you sure you want to delete this products?")) {
+      try {
+        const res = await fetch(`/api/admin/product/delete/${id}`, {
+          method: "GET",
+        });
+        const json = await res.json();
+        if (json.success) {
+          const newProductsArr = allProducts.filter((prod) => {
+            return prod.product.id !== id;
+          });
+          setAllProducts(newProductsArr);
+          toast.success("Product Deleted Successfully...");
+        }
+      } catch (error) {
+        toast.error("Something Went wrong. Please try again later.");
+      }
+    }
+  };
   return (
     <>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -35,6 +57,12 @@ const AllProductsTable = ({ allProds }) => {
               </th>
               <th scope="col" className="px-6 py-3">
                 View
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Edit
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Delete
               </th>
             </tr>
           </thead>
@@ -67,7 +95,24 @@ const AllProductsTable = ({ allProds }) => {
                       />
                     </td>
                     <td className="px-6 py-4">{product.category}</td>
-                    <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4"><Link prefetch href={`/product/${product.product.slug}`}>View</Link></td>
+                    <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">
+                      <Link prefetch href={`/product/${product.product.slug}`}>
+                        <FaArrowCircleRight className="text-2xl cursor-pointer text-green-600 hover:text-green-400 bg-white rounded-full" />
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">
+                      <Link
+                        prefetch
+                        href={`/admin/product/edit/${product.product.slug}`}
+                      >
+                        <FaPencilAlt className="text-2xl cursor-pointer text-green-600 dark:text-green-400 dark:hover:text-green-200 hover:text-green-400" />
+                      </Link>
+                    </td>
+                    <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">
+                      <button onClick={() => deleteProduct(product.product.id)}>
+                        <MdDelete className="text-3xl text-red-600 hover:text-red-400 cursor-pointer" />
+                      </button>
+                    </td>
                   </tr>
                 </>
               );

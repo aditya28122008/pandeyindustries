@@ -10,8 +10,6 @@ const CartState = ({ children }) => {
     const newArr = cart.filter((carProd) => {
       return carProd.id !== prod.id;
     });
-    // console.log(newArr);
-    // console.log(newCart);
     setCart(newArr);
     updateSubtotal(newArr);
     localStorage.setItem("cart", JSON.stringify(newArr));

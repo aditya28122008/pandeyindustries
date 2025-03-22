@@ -18,6 +18,14 @@ const Header = async () => {
   const productCats = await prisma.productCategory.findMany({
     where: { navView: true },
   });
+  let user;
+  if (session) {
+    user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+    });
+  }
+  
+  
   // const { setTheme, resolvedTheme } = useTheme();
 
   return (
@@ -115,7 +123,7 @@ const Header = async () => {
                 </Link>
               </>
             ) : (
-              <ProfileDropDown session={session} />
+              <ProfileDropDown session={session} user={user} />
             )}
           </div>
         </div>

@@ -1,9 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 "use server";
-import client from "@/app/db";
 import ProductItem from "@/Components/ProductItem";
 import prisma from "@/lib/prisma";
-// import { MongoClient } from "mongodb";
 
 export async function generateMetadata({ params }) {
   const category = await prisma.productCategory.findUnique({

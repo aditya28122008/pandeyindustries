@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
-const ProfileDropDown = ({ session }) => {
+const ProfileDropDown = ({ session, user }) => {
   const [dropDown, setDropDown] = useState(false);
   const toggleDropdown = () => {
     setDropDown(!dropDown);
@@ -82,6 +82,18 @@ const ProfileDropDown = ({ session }) => {
                       className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white"
                     >
                       Fill Up the Remainigs...!
+                    </button>
+                  </Link>
+                </>
+              )}
+              {user.category === "CONSUMER" && (
+                <>
+                  <Link href={"/become-seller"}>
+                    <button
+                      onClick={toggleDropdown}
+                      className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Become a Seller
                     </button>
                   </Link>
                 </>

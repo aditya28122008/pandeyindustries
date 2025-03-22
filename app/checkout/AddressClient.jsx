@@ -10,7 +10,6 @@ const AddressClient = ({ adds }) => {
         method: "GET",
       });
       const json = await res.json();
-      // console.log(json);
       if (json.success) {
         const newAdds = address.filter((addres) => {
           return addres.id !== id;

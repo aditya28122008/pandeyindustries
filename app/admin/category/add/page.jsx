@@ -40,11 +40,10 @@ const AddCategory = () => {
           description: e.get("description"),
           imagePubID: dbFileName.public_id,
           image: dbFileName.secure_url,
-          url: e.get("name").toLowerCase(),
+          url: encodeURIComponent(e.get("name").toLowerCase()),
           tagline: e.get("tagline"),
         },
       });
-      // console.log(addCat);
       return { success: true };
     } else {
       return { success: false };
