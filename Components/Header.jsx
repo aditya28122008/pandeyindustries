@@ -19,9 +19,13 @@ const Header = async () => {
     where: { navView: true },
   });
   let user;
+  let shops;
   if (session) {
     user = await prisma.user.findUnique({
       where: { id: session.user.id },
+    });
+    shops = await prisma.shop.findMany({
+      where: { userId: user.id },
     });
   }
   
@@ -123,7 +127,7 @@ const Header = async () => {
                 </Link>
               </>
             ) : (
-              <ProfileDropDown session={session} user={user} />
+              <ProfileDropDown shops={shops} session={session} userVar={user} />
             )}
           </div>
         </div>

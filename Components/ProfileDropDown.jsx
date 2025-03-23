@@ -4,13 +4,16 @@
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
-const ProfileDropDown = ({ session, user }) => {
+const ProfileDropDown = ({ session, userVar, shops }) => {
+  const [user, setUser] = useState(userVar);
   const [dropDown, setDropDown] = useState(false);
   const toggleDropdown = () => {
     setDropDown(!dropDown);
   };
+
   return (
     <>
       <>
@@ -86,7 +89,7 @@ const ProfileDropDown = ({ session, user }) => {
                   </Link>
                 </>
               )}
-              {user.category === "CONSUMER" && (
+              {user.category === "CONSUMER" && shops.length === 0 ? (
                 <>
                   <Link href={"/become-seller"}>
                     <button
@@ -96,6 +99,54 @@ const ProfileDropDown = ({ session, user }) => {
                       Become a Seller
                     </button>
                   </Link>
+                </>
+              ) : (
+                <>
+                  {user.category === "SELLER" ? (
+                    <button
+                      onClick={async () => {
+                        toggleDropdown();
+                        const res = await fetch("/api/user/switch");
+                        const json = await res.json();
+                        if (json.success) {
+                          setUser({ ...user, category: "CONSUMER" });
+                          toast.success(
+                            "Switched to Consumer. Please refresh to see changes."
+                          );
+                        } else {
+                          toast.error(
+                            "Something went wrong. Please try again."
+                          );
+                        }
+                      }}
+                      className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white"
+                    >
+                      Switch to Consumer
+                    </button>
+                  ) : (
+                    <>
+                      <button
+                        onClick={async () => {
+                          toggleDropdown();
+                          const res = await fetch("/api/user/switch");
+                          const json = await res.json();
+                          if (json.success) {
+                            setUser({ ...user, category: "SELLER" });
+                            toast.success(
+                              "Switched to Seller. Please refresh to see changes."
+                            );
+                          } else {
+                            toast.error(
+                              "Something went wrong. Please try again."
+                            );
+                          }
+                        }}
+                        className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white"
+                      >
+                        Switch to Selling
+                      </button>
+                    </>
+                  )}
                 </>
               )}
               <li>
