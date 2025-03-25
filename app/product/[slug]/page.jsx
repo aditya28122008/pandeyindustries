@@ -7,8 +7,6 @@ import SinngleProdClient from "@/Components/SinngleProdClient";
 import prisma from "@/lib/prisma";
 // import client from "@/app/db";
 
-
-
 export async function generateMetadata({ params }) {
   const slug = params.slug.toString();
   // Fetch product data based on the slug
@@ -17,16 +15,17 @@ export async function generateMetadata({ params }) {
       slug: slug,
     },
   });
-  
 
   // Return metadata if product is found
   if (product) {
     return {
       title: `${product.name} - Pandey Industries`,
-      description: product.desc || 'Check out this amazing product on Pandey Industries.',
+      description:
+        product.desc || "Check out this amazing product on Pandey Industries.",
       openGraph: {
         title: `${product.name} - Pandey Industries`,
-        description: product.desc || 'Explore this product on Pandey Industries.',
+        description:
+          product.desc || "Explore this product on Pandey Industries.",
         url: `${process.env.WEBPAGE_URL}/product/${slug}`,
         images: [
           {
@@ -40,16 +39,16 @@ export async function generateMetadata({ params }) {
 
   // Fallback metadata if product is not found
   return {
-    title: 'Product Not Found - Pandey Industries',
-    description: 'The product you are looking for does not exist.',
+    title: "Product Not Found - Pandey Industries",
+    description: "The product you are looking for does not exist.",
     openGraph: {
-      title: 'Product Not Found - Pandey Industries',
-      description: 'The product you are looking for does not exist.',
+      title: "Product Not Found - Pandey Industries",
+      description: "The product you are looking for does not exist.",
       url: `${process.env.WEBPAGE_URL}/product/${slug}`,
       images: [
         {
-          url: '/images/product-not-found.png',
-          alt: 'Product Not Found',
+          url: "/images/product-not-found.png",
+          alt: "Product Not Found",
         },
       ],
     },
@@ -58,12 +57,17 @@ export async function generateMetadata({ params }) {
 
 const ProductSpecific = async ({ params }) => {
   const slug = params.slug.toString();
-  
+
   const product = await prisma.products.findUnique({
     where: {
       slug: slug, // Replace with the actual slug
     },
-  })
+  });
+  const shop = await prisma.shop.findUnique({
+    where: {
+      id: product.shopId,
+    },
+  });
 
   return (
     <div>
@@ -81,7 +85,7 @@ const ProductSpecific = async ({ params }) => {
             />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 dark:text-gray-300 tracking-widest">
-                {product.brand}
+                {shop.name}
               </h2>
               <h1 className="text-gray-900 dark:text-white text-3xl title-font font-medium mb-1">
                 {product.name}

@@ -11,6 +11,9 @@ import ModeProvider from "@/Components/ModeProvider";
 import 'react-toastify/dist/ReactToastify.css';
 import ToastifyClient from "@/Components/ToastifyClient";
 // import LoadingBar from "react-top-loading-bar";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,7 +30,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ModeProvider>
-          <SessionWrapper>
+          {/* <SessionWrapper> */}
             <LoadingBarWrapper>
               <CartWrapper>
                 {/* <LoadingBarComponent> */}
@@ -43,7 +46,7 @@ export default function RootLayout({ children }) {
                 {/* </LoadingBarComponent> */}
               </CartWrapper>
             </LoadingBarWrapper>
-          </SessionWrapper>
+          {/* </SessionWrapper> */}
         </ModeProvider>
       </body>
     </html>

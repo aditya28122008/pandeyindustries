@@ -2,13 +2,16 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaArrowCircleRight, FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 
-const AllProductsTable = ({ allProds }) => {
+const SellerAllProductsTable = ({ allProds }) => {
   const [allProducts, setAllProducts] = useState(allProds);
+  
+  
+  
   const deleteProduct = async (id) => {
     if (confirm("Are you sure you want to delete this products?")) {
       try {
@@ -70,7 +73,7 @@ const AllProductsTable = ({ allProds }) => {
             {allProducts.map((product) => {
               return (
                 <>
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <tr key={product.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
@@ -124,4 +127,4 @@ const AllProductsTable = ({ allProds }) => {
   );
 };
 
-export default AllProductsTable;
+export default SellerAllProductsTable;

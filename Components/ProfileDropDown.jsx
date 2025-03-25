@@ -70,12 +70,13 @@ const ProfileDropDown = ({ session, userVar, shops }) => {
               aria-labelledby="dropdownDefaultButton"
             >
               <li>
-                <button
+                <Link
+                  href={user.category === "SELLER" ? "/seller-admin/" : "#"}
                   onClick={toggleDropdown}
-                  className="block px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white"
+                  className="block text-center px-4 py-2 hover:bg-gray-100 w-full dark:hover:bg-gray-600 dark:hover:text-white"
                 >
                   Dashboard
-                </button>
+                </Link>
               </li>
               {!session.user.ProfileComplete && (
                 <>

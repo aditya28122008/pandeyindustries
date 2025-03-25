@@ -3,9 +3,7 @@
 import Link from "next/link";
 import { IoMdCart } from "react-icons/io";
 import Image from "next/image";
-
 import CartSidebar from "./CartSidebar";
-
 import { auth } from "@/auth";
 import ClientFunctions from "./ClientFunctions";
 import ProfileDropDown from "./ProfileDropDown";
@@ -28,8 +26,7 @@ const Header = async () => {
       where: { userId: user.id },
     });
   }
-  
-  
+
   // const { setTheme, resolvedTheme } = useTheme();
 
   return (

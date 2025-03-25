@@ -2,32 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import { FaArrowCircleRight, FaPencilAlt } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { toast } from "react-toastify";
 
-const AllProductsTable = ({ allProds }) => {
-  const [allProducts, setAllProducts] = useState(allProds);
-  const deleteProduct = async (id) => {
-    if (confirm("Are you sure you want to delete this products?")) {
-      try {
-        const res = await fetch(`/api/admin/product/delete/${id}`, {
-          method: "GET",
-        });
-        const json = await res.json();
-        if (json.success) {
-          const newProductsArr = allProducts.filter((prod) => {
-            return prod.product.id !== id;
-          });
-          setAllProducts(newProductsArr);
-          toast.success("Product Deleted Successfully...");
-        }
-      } catch (error) {
-        toast.error("Something Went wrong. Please try again later.");
-      }
-    }
-  };
+const OnGoningSalesTableclient = ({ sales }) => {
+  const [allSales, setAllSales] = useState(sales);
   return (
     <>
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -35,39 +15,30 @@ const AllProductsTable = ({ allProds }) => {
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
-                Product Name
+                Title
               </th>
               <th scope="col" className="px-6 py-3">
                 Description
               </th>
               <th scope="col" className="px-6 py-3">
-                OrPrice
-              </th>
-              <th scope="col" className="px-6 py-3">
-                DisPrice
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Shop
-              </th>
-              <th scope="col" className="px-6 py-3">
                 Image
               </th>
               <th scope="col" className="px-6 py-3">
-                Category
+                StartDate
+              </th>
+              <th scope="col" className="px-6 py-3">
+                EndDate
               </th>
               <th scope="col" className="px-6 py-3">
                 View
               </th>
               <th scope="col" className="px-6 py-3">
-                Edit
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Delete
+                Stop Immidieately
               </th>
             </tr>
           </thead>
           <tbody>
-            {allProducts.map((product) => {
+            {allSales.map((sale) => {
               return (
                 <>
                   <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -75,37 +46,26 @@ const AllProductsTable = ({ allProds }) => {
                       scope="row"
                       className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {product.product.name}
+                      {sale.title}
                     </th>
                     <td className="px-6 py-4">
-                      {product.product.desc.slice(0, 15)}...
+                      {sale.description.slice(0, 15)}...
                     </td>
-                    <td className="px-6 py-4">{product.product.OrPrice}</td>
-                    <td className="px-6 py-4">{product.product.disPrice}</td>
-                    <td className="px-6 py-4">{product.shop}</td>
-
                     <td className="px-6 py-4">
                       <Image
                         alt=""
-                        src={product.product.image}
+                        src={sale.image}
                         height={80}
                         width={80}
                         className="rounded-md"
                         quality={100}
                       />
                     </td>
-                    <td className="px-6 py-4">{product.category}</td>
+                    <td className="px-6 py-4">{sale.startDate}</td>
+                    <td className="px-6 py-4">{sale.endDate}</td>
                     <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">
                       <Link prefetch href={`/product/${product.product.slug}`}>
                         <FaArrowCircleRight className="text-2xl cursor-pointer text-green-600 hover:text-green-400 bg-white rounded-full" />
-                      </Link>
-                    </td>
-                    <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">
-                      <Link
-                        prefetch
-                        href={`/admin/product/edit/${product.product.slug}`}
-                      >
-                        <FaPencilAlt className="text-2xl cursor-pointer text-green-600 dark:text-green-400 dark:hover:text-green-200 hover:text-green-400" />
                       </Link>
                     </td>
                     <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">
@@ -124,4 +84,4 @@ const AllProductsTable = ({ allProds }) => {
   );
 };
 
-export default AllProductsTable;
+export default OnGoningSalesTableclient;

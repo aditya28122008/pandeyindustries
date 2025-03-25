@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,6 +5,18 @@ generator client {
 datasource db {
   provider = "mongodb"
   url      = env("MONGODB_URI")
+}
+
+model OngoingSale {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  image       String
+  startDate   DateTime
+  endDate     DateTime
+  url         String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum UserCategory {
@@ -36,18 +42,6 @@ model User {
   category        UserCategory    @default(CONSUMER)
   shop            Shop?
   shopId          String?         @db.ObjectId
-}
-
-model Shop {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  street      String
-  city        String
-  state       String
-  zip         String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String    @unique @db.ObjectId
-  products    Products[] // Relation field for the products in this shop
 }
 
 model Account {
@@ -103,23 +97,44 @@ model Authenticator {
   @@unique([userId, credentialID])
 }
 
+model ProductSpecs {
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
+  homeSlider Boolean    @default(false)
+  product    Products[]
+}
+
 model Products {
-  id         String          @id @default(auto()) @map("_id") @db.ObjectId
-  name       String
-  OrPrice    Int
-  desc       String
-  pincodes   String[]
-  image      String
-  imagePubId String
-  slug       String          @unique
-  brand      String
-  disPrice   String
-  categoryId String          @db.ObjectId
-  category   ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  shopId     String          @db.ObjectId
-  shop       Shop            @relation(fields: [shopId], references: [id], onDelete: Cascade)
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  OrPrice       Int
+  desc          String
+  pincodes      String[]
+  image         String
+  imagePubId    String
+  slug          String          @unique
+  brand         String
+  disPrice      String
+  categoryId    String          @db.ObjectId
+  category      ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  productSpecId String?         @db.ObjectId
+  ProductSpecs  ProductSpecs?   @relation(fields: [productSpecId], references: [id], onDelete: Cascade)
+
+  shopId String @db.ObjectId
+  shop   Shop   @relation(fields: [shopId], references: [id], onDelete: Cascade)
 
   @@map("products")
+}
+
+model Shop {
+  id       String     @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  street   String
+  city     String
+  state    String
+  zip      String
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String     @unique @db.ObjectId
+  products Products[] // Relation field for the products in this shop
 }
 
 model Address {

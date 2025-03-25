@@ -3,6 +3,7 @@ import AdminSidebar from "./components/AdminSidebar";
 import { notFound, redirect } from "next/navigation";
 import vars from "@/vars";
 
+
 export const metadata = {
   title: 'Admin | Pandey Industries',
 };

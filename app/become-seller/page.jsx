@@ -27,7 +27,7 @@ const BecomeASeller = async () => {
         city: e.get("city"),
         street: e.get("street"),
         zip: e.get("zip"),
-        userId: session.user.id,
+        userId: user.id,
       },
     });
     await prisma.user.update({

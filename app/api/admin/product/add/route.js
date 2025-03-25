@@ -1,4 +1,3 @@
-// import client from "@/app/db";
 import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 import vars from "@/vars";
@@ -7,7 +6,14 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   const session = await auth();
   if (session) {
+    const user = await prisma.user.findUnique({
+      where: { id: session.user.id },
+    });
+    const shop = await prisma.shop.findFirst({
+      where: { userId: user.id },
+    });
     const data = await request.formData();
+
     const file = data.get("image");
     function slugify(str) {
       str = str.replace(/^\s+|\s+$/g, "");
@@ -43,7 +49,12 @@ export async function POST(request) {
         slug: slugify(`${data.get("name")}-${Date.now()}`),
         brand: data.get("brand").toUpperCase(),
         disPrice: data.get("disprice"),
-        categoryId: data.get("category"),
+        category: {
+          connect: { id: data.get("category") },
+        },
+        shop: {
+          connect: { id: shop.id },
+        },
       },
     });
     // await client.close()
@@ -52,6 +63,6 @@ export async function POST(request) {
       { status: 201 }
     );
   } else {
-    return NextResponse.json({success: false}, { status: 401 });
+    return NextResponse.json({ success: false }, { status: 401 });
   }
 }
