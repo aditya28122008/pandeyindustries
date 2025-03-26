@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <ModeProvider>
-          {/* <SessionWrapper> */}
+          <SessionWrapper>
             <LoadingBarWrapper>
               <CartWrapper>
                 {/* <LoadingBarComponent> */}
@@ -46,7 +46,7 @@ export default function RootLayout({ children }) {
                 {/* </LoadingBarComponent> */}
               </CartWrapper>
             </LoadingBarWrapper>
-          {/* </SessionWrapper> */}
+          </SessionWrapper>
         </ModeProvider>
       </body>
     </html>
