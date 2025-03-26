@@ -58,12 +58,6 @@ const AllProductsTable = ({ allProds }) => {
               <th scope="col" className="px-6 py-3">
                 View
               </th>
-              <th scope="col" className="px-6 py-3">
-                Edit
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Delete
-              </th>
             </tr>
           </thead>
           <tbody>
@@ -99,19 +93,6 @@ const AllProductsTable = ({ allProds }) => {
                       <Link prefetch href={`/product/${product.product.slug}`}>
                         <FaArrowCircleRight className="text-2xl cursor-pointer text-green-600 hover:text-green-400 bg-white rounded-full" />
                       </Link>
-                    </td>
-                    <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">
-                      <Link
-                        prefetch
-                        href={`/admin/product/edit/${product.product.slug}`}
-                      >
-                        <FaPencilAlt className="text-2xl cursor-pointer text-green-600 dark:text-green-400 dark:hover:text-green-200 hover:text-green-400" />
-                      </Link>
-                    </td>
-                    <td className="px-6 py-4 text-blue-600 hover:text-blue-400 cursor-pointer hover:underline hover:underline-offset-4">
-                      <button onClick={() => deleteProduct(product.product.id)}>
-                        <MdDelete className="text-3xl text-red-600 hover:text-red-400 cursor-pointer" />
-                      </button>
                     </td>
                   </tr>
                 </>

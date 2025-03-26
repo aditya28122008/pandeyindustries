@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-const EditProductForm = ({ categories, product }) => {
+const SellerEditProductForm = ({ categories, product }) => {
   const router = useRouter();
   const [image, setimage] = useState(null);
   const [productCreds, setProductCreds] = useState(product);
+
+  
 
   const onChange = (e) => {
     setProductCreds({ ...productCreds, [e.target.name]: e.target.value });
@@ -20,23 +22,20 @@ const EditProductForm = ({ categories, product }) => {
       try {
         const productFormData = new FormData();
         productFormData.set("name", productCreds.name);
-        productFormData.set("orprice", productCreds.orprice);
+        productFormData.set("OrPrice", productCreds.OrPrice);
         productFormData.set("desc", productCreds.desc);
         productFormData.set("pincodes", productCreds.pincodes);
         productFormData.set("brand", productCreds.brand);
-        productFormData.set("disprice", productCreds.disprice);
-        productFormData.set("category", productCreds.category);
+        productFormData.set("disPrice", productCreds.disPrice);
+        productFormData.set("category", productCreds.categoryId);
         productFormData.set("image", image);
         const res = await fetch(`/api/admin/product/edit/${product.slug}`, {
           method: "POST",
           body: productFormData,
         });
-        const json = await res.json();
         if (res.status === 200) {
-          console.log(json);
-          
-          // toast.success("Product Added Successfully...");
-          // router.push("/admin/product");
+          toast.success("Product Updated Successfully...");
+          router.push("/seller-admin/product");
         }
       } catch (error) {
         toast.error("Something Went wrong. Please try again later.");
@@ -153,10 +152,10 @@ const EditProductForm = ({ categories, product }) => {
           <>
             <select
               id="countries"
-              name="category" // Add this line to bind the select value to the state
+              name="categoryId" // Add this line to bind the select value to the state
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               onChange={onChange} // Ensure correct function name
-              value={productCreds.category}
+              value={productCreds.categoryId} // Ensure correct state value
             >
               <>
                 {categories.map((cat) => {
@@ -216,7 +215,7 @@ const EditProductForm = ({ categories, product }) => {
             className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             htmlFor="image"
           >
-            Upload Product Image
+            If you want to change current product image, upload a new one.
           </label>
           <input
             className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
@@ -244,4 +243,4 @@ const EditProductForm = ({ categories, product }) => {
   );
 };
 
-export default EditProductForm;
+export default SellerEditProductForm;
