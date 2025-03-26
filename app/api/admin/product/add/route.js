@@ -44,7 +44,7 @@ export async function POST(request) {
         OrPrice: parseInt(data.get("orprice")),
         desc: data.get("desc"),
         pincodes: data.get("pincodes").split(","),
-        image: fileName.secure_ur,
+        image: fileName.secure_url,
         imagePubId: fileName.public_id,
         slug: slugify(`${data.get("name")}-${Date.now()}`),
         brand: data.get("brand").toUpperCase(),
